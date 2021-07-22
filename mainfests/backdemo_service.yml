@@ -1,0 +1,45 @@
+# https://zhuanlan.zhihu.com/p/157565821
+apiVersion: v1
+kind: Service
+metadata:
+  name: backdemo-service
+spec:
+  ports:
+  - port: 5561 # service 绑定的端口，也就是这个 Service 所对应的 ip 监听的端口
+    targetPort: 6000 # backend 的端口，也就是 Pod 所暴露的端口
+#    nodePort: 30080
+  selector:
+    app: backdemo
+#  type: NodePort
+
+# 4种类型
+# ClusterIP 参考doc里面的图。 这种类型的service只能在集群内访问。
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: backdemo-service
+# spec:
+#   ports:
+#   - port: 5561
+#     targetPort: 6000
+#   selector:
+#     app: backdemo
+#   type: ClusterIP
+
+
+
+# NodePort
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-python
+# spec:
+#   ports:
+#   - port: 3000
+#     protocol: TCP
+#     targetPort: 443
+#     nodePort: 30080
+#   selector:
+#     run: pod-python
+#   type: NodePort
