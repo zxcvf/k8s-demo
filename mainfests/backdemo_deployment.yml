@@ -5,7 +5,7 @@ metadata:
   labels:
     app: backdemo
 spec:
-  replicas: 1
+  replicas: 3  # 运行3个pod 每个pod运行后生成一个endpoint
   selector:
     matchLabels:
       app: backdemo
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backdemo
-        image: 192.168.50.148:3000/backdemo
+        image: 192.168.50.73:3000/backdemo
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 6000  # 需要暴露的IP

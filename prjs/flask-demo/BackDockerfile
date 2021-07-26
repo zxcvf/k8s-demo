@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.7-alpine
 MAINTAINER life 673554003@qq.com
 ENV PYTHONBUFFERD 1
 ENV LANG C.UTF-8
@@ -7,8 +7,8 @@ ENV env dev
 RUN mkdir /code
 WORKDIR /code
 ADD ./ /code/
-RUN pip3 install flask
+RUN pip3 install flask -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
-EXPOSE 6000
+EXPOSE 4000
 
 CMD python /code/app.py
