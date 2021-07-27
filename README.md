@@ -26,7 +26,14 @@ minikube delete && minikube start --insecure-registry=192.168.50.73:3000
 kubectl create  -f ./mainfests/backdemo_deployment.yml
 # kubectl rollout restart deployment backdemo-deployment
 # kubectl delete deployment backdemo-deployment
+    更新镜像: 修改deploy文件 kubectl apply -f mainfests/backdemo_deployment.yml 一个个镜像更新
+
 
 kubectl create  -f ./mainfests/backdemo_service.yml
 # 在minikube容器中访问 cluster-ip:6001
 # 在minikube容器中访问 endpoint:6000
+
+
+# https://kubernetes.io/zh/docs/tasks/access-application-cluster/connecting-frontend-backend/
+创建前端应用
+前端使用被赋予后端 Service 的 DNS 名称将请求发送到后端工作 Pods。这一DNS 名称为 hello，也就是 examples/service/access/backend-service.yaml 配置 文件中 name 字段的取值。

@@ -17,6 +17,7 @@ spec:
     # 最后可以在minikube容器中 访问svc的clusterip:6001 以及 endpoint:6000 (对内)
   selector:
     app: backdemo
+    tier: backend
 
 
 # 4种类型
