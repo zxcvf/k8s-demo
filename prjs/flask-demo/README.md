@@ -15,4 +15,4 @@ minikube start --insecure-registry=192.168.50.73:3000
 
 # docker run -d -p 7000:6000 backdemo 测试
 
- 
+# docker run -p 6379:6379 -d redis:latest redis-server

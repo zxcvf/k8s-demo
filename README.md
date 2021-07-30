@@ -20,7 +20,9 @@ http://192.168.50.73:3000/v2/_catalog
 
 # docker增加insecure-registries配置
 # minikube 增加--insecure-registry
-minikube delete && minikube start --insecure-registry=192.168.50.73:3000
+minikube delete && minikube start --insecure-registry=192.168.50.73:3000 --registry-mirror=https://registry.docker-cn.com
+minikube start --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --registry-mirror=https://registry.docker-cn.com --vm-driver=<driver_name>
+minikube start --driver=none --extra-config=kubeadm.ignore-preflight-errors=NumCPU --force --cpus 1
 # https://researchlab.github.io/2019/08/24/minikube-pull-image-from-docker-registry/
 
 kubectl create  -f ./mainfests/backdemo_deployment.yml
@@ -35,5 +37,11 @@ kubectl create  -f ./mainfests/backdemo_service.yml
 
 
 # https://kubernetes.io/zh/docs/tasks/access-application-cluster/connecting-frontend-backend/
-创建前端应用
+# 创建前端应用
 前端使用被赋予后端 Service 的 DNS 名称将请求发送到后端工作 Pods。这一DNS 名称为 hello，也就是 examples/service/access/backend-service.yaml 配置 文件中 name 字段的取值。
+可以在 pods中使用service.name访问
+
+# 前端镜像
+kubectl create  -f ./mainfests/frontdemo_deployment.yml
+kubectl create  -f ./mainfests/frontdemo_service.yml
+

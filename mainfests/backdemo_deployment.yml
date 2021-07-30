@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: backdemo
-        image: 192.168.50.73:3000/backdemo:v1.0.2
+        image: 192.168.50.73:3000/backdemo:v1.0.3
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 6000  # 需要暴露的IP

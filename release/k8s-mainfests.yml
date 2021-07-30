@@ -1,23 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: backdemo-deployment
+#  labels:
+#    app: backdemo
 spec:
+  replicas: 3  # 运行3个pod 每个pod运行后生成一个endpoint
   selector:
     matchLabels:
-      app: frontend
+      app: backdemo
+      tier: backend
   template:
     metadata:
       labels:
-        app: frontend
+        app: backdemo
+        tier: backend
     spec:
-      serviceAccountName: default
       containers:
-        - name: server
-          image:
-          ports:
-          - containerPort: 8080
-          imagePullPolicy: Never
-          # 如果本地存在镜像就优先使用本地镜像
-          # Never 直接不再去拉取镜像了，使用本地的；如果本地不存在就报异常了。
-
+      - name: backdemo
+        image: 192.168.50.73:3000/backdemo:v1.0.3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6000  # 需要暴露的IP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backdemo-service
+spec:
+#  type: NodePort
+  ports:
+  - port: 6001 # service 绑定的端口，也就是这个 Service 所对应的 ip 监听的端口
+    targetPort: 6000 # targetPort是pod上的端口，从port和nodePort上到来的数据最终经过kube-proxy流入到后端pod的targetPort上进入容器。
+#    nodePort: 30080
+    # 最后可以在minikube容器中 访问svc的clusterip:6001 以及 endpoint:6000 (对内)
+  selector:
+    app: backdemo
+    tier: backend

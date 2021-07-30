@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontdemo-deployment
+spec:
+  selector:
+    matchLabels:
+      app: frontdemo
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: frontdemo
+        tier: frontend
+    spec:
+      containers:
+      - name: frontdemo
+        image: 192.168.50.73:3000/python:3.7.8
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/bash", "-ce", "tail -f /dev/null"]
+        ports:
+        - containerPort: 6000  # 需要暴露的IP
+        env:
+        - name: PORT
+          value: "80"
+        - name: BACKDEMO_SERVICE_ADDR
+          value: "backdemo-service:6001"
