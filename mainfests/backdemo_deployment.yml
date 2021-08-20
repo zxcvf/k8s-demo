@@ -18,7 +18,10 @@ spec:
     spec:
       containers:
       - name: backdemo
-        image: 192.168.50.73:3000/backdemo:v1.0.3
+        image: 192.168.50.74:3000/backdemo:v1.0.6
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 6000  # 需要暴露的IP
+        env:
+        - name: REDIS_SERVER_ADDR
+          value: "redis-service:6379"

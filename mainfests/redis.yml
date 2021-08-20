@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis-server
+        image: redis:alpine
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6379  # 需要暴露的IP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis-service
+  ports:
+  - port: 6379
+    targetPort: 6379
+

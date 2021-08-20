@@ -8,7 +8,9 @@ RUN mkdir /code
 WORKDIR /code
 ADD ./ /code/
 RUN pip3 install flask -i https://pypi.tuna.tsinghua.edu.cn/simple/
-RUN pip3 install flask-cors
-EXPOSE 4000
+RUN pip3 install flask-cors -i https://pypi.tuna.tsinghua.edu.cn/simple/
+RUN pip3 install flask-redis -i https://pypi.tuna.tsinghua.edu.cn/simple/
+
+EXPOSE 6000
 
 CMD python /code/app.py

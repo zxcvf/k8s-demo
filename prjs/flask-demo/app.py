@@ -1,9 +1,25 @@
 import socket
 from flask_cors import *
 from flask import Flask, jsonify
+import redis
 
 app = Flask(__name__, static_folder='app', static_url_path="/app")
 CORS(app, supports_credentials=True)
+
+r = redis.Redis(host='redis-service', port=6379)
+
+
+@app.route("/count")
+def count():
+    count_num = int(r.get('count_num'))
+    if not count_num:
+        count_num = 0
+    count_num += 1
+    r.set('count_num', count_num)
+    return jsonify({
+        "count_num": int(count_num),
+    })
+
 
 @app.route("/")
 def heartbeat():
@@ -24,6 +40,6 @@ def heartbeat():
 if __name__ == "__main__":
     app.run(
         host='0.0.0.0',
-        port=3000,
+        port=6000,
         debug=True
     )
