@@ -1,6 +1,8 @@
 # 打包镜像
 docker build -t backdemo  -f ./BackDockerfile .
-
+docker build -t backdemo --no-cache -f ./BackDockerfile .
+docker tag backdemo 47.106.112.61:3000/backdemo:v3
+docker push 47.106.112.61:3000/backdemo:v3
 # 上传registry
 # 需要本地registry
 # docker 配置 --insecure-registry=192.168.50.74:3000

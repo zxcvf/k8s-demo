@@ -1,0 +1,53 @@
+# clusterIP 将所有pod集合成一个集群ip 对内部访问
+# nodeport
+# NodePort 服务是引导外部流量到你的服务的最原始方式。NodePort，正如这个名字所示，在所有节点（虚拟机）上开放一个特定端口，任何发送到该端口的流量都被转发到对应服务
+# 不建议在生产环境上用这种方式暴露服务
+
+# https://zhuanlan.zhihu.com/p/157565821
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontdemo-service
+spec:
+#  type: NodePort
+  ports:
+  - port: 6001 # service 绑定的端口，也就是这个 Service 所对应的 ip 监听的端口
+    targetPort: 6000 # targetPort是pod上的端口，从port和nodePort上到来的数据最终经过kube-proxy流入到后端pod的targetPort上进入容器。
+#    nodePort: 30080
+    # 最后可以在minikube容器中 访问svc的clusterip:6001 以及 endpoint:6000 (对内)
+  selector:
+    app: backdemo
+    tier: backend
+
+
+# 4种类型
+# ClusterIP 参考doc里面的图。 这种类型的service只能在集群内访问。
+# apiVersion: v10
+# kind: Service
+# metadata:
+#   name: backdemo-service
+# spec:
+#   ports:
+#   - port: 5561
+#     targetPort: 6000
+#   selector:
+#     app: backdemo
+#   type: ClusterIP
+
+
+
+# NodePort
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: service-python
+# spec:
+#   ports:
+#   - port: 3000
+#     protocol: TCP
+#     targetPort: 443
+#     nodePort: 30080
+#   selector:
+#     run: pod-python
+#   type: NodePort

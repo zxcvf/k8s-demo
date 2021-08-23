@@ -1,3 +1,5 @@
+
+# 仅仅这样 无法通过python redis库 cluster-ip:6379和service-name:6379访问redis
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,14 +8,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis
+      app: redis-service
+      test: hahahaha
   template:
     metadata:
       labels:
-        app: redis
+        app: redis-service
+        test: hahahaha
     spec:
       containers:
-      - name: redis-server
+      - name: redis
         image: redis:alpine
         imagePullPolicy: Always
         ports:
@@ -22,11 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis
+  name: redis-service
 spec:
+  type: ClusterIP
   selector:
     app: redis-service
   ports:
-  - port: 6379
+  - name: redis
+    port: 6379
     targetPort: 6379
 

@@ -20,6 +20,9 @@ http://192.168.50.73:3000/v2/_catalog
 
 # docker增加insecure-registries配置
 # minikube 增加--insecure-registry
+
+minikube delete && minikube start --insecure-registry=47.106.112.61:3000 --base-image="anjone/kicbase" --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --registry-mirror=https://registry.docker-cn.com
+此时会拉取阿里的镜像仓库.
 minikube delete && minikube start --insecure-registry=192.168.50.73:3000 --registry-mirror=https://registry.docker-cn.com
 minikube start --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --registry-mirror=https://registry.docker-cn.com --vm-driver=<driver_name>
 minikube start --driver=none --extra-config=kubeadm.ignore-preflight-errors=NumCPU --force --cpus 1
