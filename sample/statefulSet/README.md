@@ -1,0 +1,5 @@
+CoreDNS的作用：在K8S里，我们想要通过name来访问服务的方式就是在Deployment上面添加一层Service，
+这样我们就可以通过Service name来访问服务了，那其中的原理就是和CoreDNS有关，它将Service name解析成Cluster IP，
+
+ClusterIP的原理：一个Service可能对应多个EndPoint(Pod)，client访问的是Cluster IP，通过iptables规则转到Real Server，从而达到负载均衡的效果
+
