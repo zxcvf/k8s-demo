@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /testpath
+        pathType: Prefix
+        backend:
+          service:
+            name: test
+            port:
+              number: 80
+
+
+#λ kubectl.exe describe ing minimal-ingress
+#Name:             minimal-ingress
+#Namespace:        default
+#Address:
+#Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+#Rules:
+#  Host        Path  Backends
+#  ----        ----  --------
+#  *
+#              /testpath   test:80 (<error: endpoints "test" not found>)
+#Annotations:  nginx.ingress.kubernetes.io/rewrite-target: /
+#Events:       <none>

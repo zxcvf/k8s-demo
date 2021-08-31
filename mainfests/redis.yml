@@ -1,38 +1,42 @@
 
+
+
 # 仅仅这样 无法通过python redis库 cluster-ip:6379和service-name:6379访问redis
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: redis
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: redis-service
-      test: hahahaha
-  template:
-    metadata:
-      labels:
-        app: redis-service
-        test: hahahaha
-    spec:
-      containers:
-      - name: redis
-        image: redis:alpine
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 6379  # 需要暴露的IP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-service
-spec:
-  type: ClusterIP
-  selector:
-    app: redis-service
-  ports:
-  - name: redis
-    port: 6379
-    targetPort: 6379
+
+# 部署3个redis   1. 需要stateful化   2. 需要集群化
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: redis
+#spec:
+#  replicas: 3
+#  selector:
+#    matchLabels:
+#      app: redis-service
+#      test: hahahaha
+#  template:
+#    metadata:
+#      labels:
+#        app: redis-service
+#        test: hahahaha
+#    spec:
+#      containers:
+#      - name: redis
+#        image: redis:alpine
+#        imagePullPolicy: Always
+#        ports:
+#        - containerPort: 6379  # 需要暴露的IP
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: redis-service
+#spec:
+#  type: ClusterIP
+#  selector:
+#    app: redis-service
+#  ports:
+#  - name: redis
+#    port: 6379
+#    targetPort: 6379
 
