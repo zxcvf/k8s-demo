@@ -1,0 +1,4 @@
+resources:
+  - mysql-pvc.yml
+  - mysql-deployment.yml
+  - mysql-service.yml

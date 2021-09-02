@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: testpress
+spec:
+  selector:
+    matchLabels:
+      app: testpress
+      tier: mysql
+  strategy:
+    type: Recreate  # 该策略下将杀掉正在运行的Pod，然后创建新的。 RollingUpdate：设置spec.strategy.type=RollingUpdate，滚动更新，即逐渐减少旧Pod的同时逐渐增加新Pod。
+  template:
+    metadata:
+      labels:
+        app: testpress
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql
+        name: mysql
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "123456"
+
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
