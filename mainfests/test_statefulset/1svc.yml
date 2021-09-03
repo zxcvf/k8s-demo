@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress-mysql
+  name: test-stateful-service
   labels:
     app: testpress
 spec:
@@ -9,5 +9,5 @@ spec:
     - port: 3306
   selector:
     app: testpress
-    tier: mysql
+    tier: mysql1
   clusterIP: None
