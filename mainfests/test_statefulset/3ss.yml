@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: test-statefutset
+  name: test-statefutset-mysql
 spec:
   replicas: 3
-  serviceName: "test-stateful-service"
+  serviceName: "test-stateful-service-mysql"
   selector:
     matchLabels:
       app: testpress
@@ -28,11 +28,11 @@ spec:
         - name: testpress-pv
           mountPath: /var/lib/mysql
 #  非持久
-#  volumeClaimTemplates:
-#  - metadata:
-#      name: testpress-pv
-#    spec:
-#      accessModes: [ "ReadWriteOnce" ]
-#      resources:
-#        requests:
-#          storage: 1Gi
+  volumeClaimTemplates:
+  - metadata:
+      name: testpress-pv
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
